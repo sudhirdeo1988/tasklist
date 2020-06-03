@@ -1,0 +1,35 @@
+@import '../../assets/scss/ThemeColors';
+@import '../../assets/scss/mixins';
+
+.c-header{
+    background-color: $secondaryColor;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    z-index: 10;
+    @include box-shadow(1px 0 5px #333);
+
+        .pageTitle{
+            color: $primaryColor;
+            display: inline-block;
+            float: left;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .c-btn{
+            background-color: $primaryColor;
+            color: $white;
+            border: 0;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 12px;
+            line-height: 14px;
+            outline: none;
+            vertical-align: middle;
+            @include rounded-corners(4px);
+        }
+}
