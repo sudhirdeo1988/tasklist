@@ -1,14 +1,23 @@
-export const checkFoodType = recipe =>{
-  const foodType = recipe.includes('Vegetarian');
-  return foodType;
+import emptyInitialState from '../store/initialState';
+
+export function setWebStorage() {
+  if (typeof Storage !== 'undefined') {
+    if (localStorage) {
+      localStorage.setItem('todoList', JSON.stringify(emptyInitialState.todoList));
+    } else {
+      sessionStorage.setItem('todoList', JSON.stringify(emptyInitialState.todoList));
+    }
+  }
 }
 
-export const checkInFav = (favRecipe, recipeDtls) =>{
-  let checkObj = null;
-  if(favRecipe.length === 0){
-    checkObj = false;
-  }else{
-    checkObj = favRecipe.some(item => item.id === recipeDtls.id);
+export function getWebStorage() {
+  let data = [];
+  if (typeof Storage !== 'undefined') {
+    if (localStorage) {
+      data = localStorage.getItem('todoList', JSON.stringify(emptyInitialState.todoList));
+    } else {
+      data = sessionStorage.getItem('todoList', JSON.stringify(emptyInitialState.todoList));
+    }
   }
-  return checkObj;
+  return JSON.parse(data);
 }

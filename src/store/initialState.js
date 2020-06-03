@@ -16,7 +16,7 @@ const emptyInitialState = {
     },
     {
       listId: 2,
-      listTitle: 'ToDo',
+      listTitle: 'In Progress',
       listCards:[
         {
           cardId: 1,
