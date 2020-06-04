@@ -1,4 +1,5 @@
 import emptyInitialState from '../store/initialState';
+import uuid from 'react-uuid';
 
 export function setWebStorage() {
   if (typeof Storage !== 'undefined') {
@@ -20,4 +21,16 @@ export function getWebStorage() {
     }
   }
   return JSON.parse(data);
+}
+
+export function createNewList (listName) {
+  const newData = getWebStorage();
+  const newList = 
+    {
+      listId: uuid(),
+      listTitle: listName,
+      listCards:[]
+    };
+    console.log(newList);
+  
 }

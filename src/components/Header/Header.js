@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from 'react-modal';
+import {createNewList} from '../../utilities/utilityFunctions';
 import './Header.scss';
 
 const customStyles = {
@@ -16,6 +17,7 @@ const customStyles = {
 const Header = (props) =>{
 
     const [modalIsOpen,setIsOpen] = React.useState(false);
+    const [listName,setListName] = React.useState('');
     function openModal() {
         setIsOpen(true);
     }
@@ -26,6 +28,14 @@ const Header = (props) =>{
 
     function closeModal(){
         setIsOpen(false);
+    }
+
+    const addNewList = () =>{
+        createNewList(listName);
+        setIsOpen(false);
+    }
+    const setValue = event =>{
+        setListName(event.target.value);
     }
 
     return(
@@ -40,8 +50,12 @@ const Header = (props) =>{
             style={customStyles}
             contentLabel="Example Modal"
             >
+                {listName}
                 <button onClick={closeModal}>close</button>
-                <div>I am a modal</div>
+                <div>
+                    <input type="text" name="listName" value={listName} onChange={(e) => setValue(e)} />
+                    <button className="cbtn" onClick={addNewList}>List</button>
+                </div>
             </Modal>
         </div>
     );
