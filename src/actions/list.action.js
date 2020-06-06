@@ -1,21 +1,22 @@
-import {setWebStorage} from '../utilities/utilityFunctions';
-import { LIST_CONSTANTS, CARD_CONSTANTS } from "../utilities/constants";
-import uuid from 'react-uuid';
+import { LIST1_CONSTANTS, CARD_CONSTANTS } from "../utilities/constants";
+// import uuid from 'react-uuid';
 
-export function setData(listName) {
+// ------------ Add List ---------------
+export function addNewList(listName) {
     return (dispatch, getState)=>{
-        const newList = 
-            {
-              listId: uuid(),
-              listTitle: listName,
-              listCards:[]
-            };
-        dispatch({type: LIST_CONSTANTS.INSERT.LIST, payload:newList});
+        // const newList = 
+        //     {
+        //       listId: uuid(),
+        //       listTitle: listName,
+        //       listCards:[]
+        //     };
+        // dispatch({type: LIST1_CONSTANTS.ADD, payload:newList});
+        return {type: CARD_CONSTANTS.ADD, payload:{listName}}
     }
 }
 
-
-export function addCard(cardName,listId){ 
+// ------------ Add Card ---------------
+export function addNewCard(cardName,listId){ 
   return {type: CARD_CONSTANTS.ADD, payload:{cardName,listId}}
 }
 
@@ -24,8 +25,7 @@ export function removeList(listId){
   return (dispatch, getState)=>{
     const newData = getState().todoList;
     const list = newData.filter(item => item.listId !== listId);
-    setWebStorage(list);  
-    dispatch({type: LIST_CONSTANTS.REMOVE.LIST, payload:list});
+    dispatch({type: LIST1_CONSTANTS.REMOVE, payload:list});
   }
 }
 

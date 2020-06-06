@@ -1,42 +1,31 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
 import Header from '../components/Header/Header';
-import {setWebStorage, getWebStorage} from '../utilities/utilityFunctions';
-import { LIST_CONSTANTS } from "../utilities/constants";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import ListComponent from '../components/ListCompnent/ListComponent';
 
 const TodoList = (props) =>{
 
-  const data = getWebStorage();
-  
-    useEffect(() => {
-        setWebStorage();
-        props.todoListReducer(data);
-    }, [data, props]);
-
-
-
+    
     return(
         <div className="c-pageWrapper">
             <Header />
+            {
+              props.todoList && props.todoList.map((item, index) =>{
+                return <ListComponent key={index} item={item} />;
+              })
+            }
         </div>
     );
 }
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    todoListReducer: (payload) =>{
-      console.log(payload)
-      dispatch({ type: LIST_CONSTANTS.ADD.LIST, payload })
-    }
-
-  };
+const mapStateToProps = (state) => {
+  return state;
 };
-  
-  export default compose(
-    connect(
-      null,
-      mapDispatchToProps
-    )
-  )(TodoList);
+
+export default compose(
+  connect(
+    mapStateToProps
+  )
+)(TodoList);

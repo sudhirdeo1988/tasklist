@@ -1,7 +1,9 @@
 import React from "react";
 import Modal from 'react-modal';
-import {createNewList} from '../../utilities/utilityFunctions';
 import './Header.scss';
+import {setData} from '../../reducers/todoListAction';
+import { compose, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const customStyles = {
     content : {
@@ -16,6 +18,7 @@ const customStyles = {
 
 const Header = (props) =>{
 
+    const [isValidInput,setIsValid] = React.useState('');
     const [modalIsOpen,setIsOpen] = React.useState(false);
     const [listName,setListName] = React.useState('');
     function openModal() {
@@ -31,17 +34,24 @@ const Header = (props) =>{
     }
 
     const addNewList = () =>{
-        createNewList(listName);
+        if(listName === ''){
+            setIsValid("Please Specify ToDo List Name!");
+            return false;
+        }
+        props.setData(listName);
         setIsOpen(false);
+        setListName('');
+        setIsValid('');
     }
     const setValue = event =>{
+        setIsValid('');
         setListName(event.target.value);
     }
 
     return(
         <div className="c-header">
             <h1 className="pageTitle">Header</h1>
-            <button className="c-btn" onClick={openModal}>Add New List</button>
+            <button className="c-btn" title="Add New ToDo List" data-toggle="tooltip" onClick={openModal}>Add New List</button>
 
             <Modal
             isOpen={modalIsOpen}
@@ -50,15 +60,24 @@ const Header = (props) =>{
             style={customStyles}
             contentLabel="Example Modal"
             >
-                {listName}
                 <button onClick={closeModal}>close</button>
                 <div>
                     <input type="text" name="listName" value={listName} onChange={(e) => setValue(e)} />
-                    <button className="cbtn" onClick={addNewList}>List</button>
+                    <button className="cbtn" onClick={addNewList}>Add List</button>
+                    { isValidInput && <p>{isValidInput}</p> }
                 </div>
             </Modal>
         </div>
     );
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  setData
+},dispatch);
+
+export default compose(
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(Header);
