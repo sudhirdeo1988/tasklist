@@ -1,69 +1,97 @@
-import React from "react";
-import Modal from 'react-modal';
-import './Header.scss';
-import {addNewList} from '../../actions/list.action';
-import {MODAL_STYLES} from '../../utilities/constants';
-import { compose, bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState } from "react";
+import { compose, bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { Container, Row, Col, Modal } from "react-bootstrap";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { addNewList } from "../../actions/list.action";
+import "./Header.scss";
 
-const Header = (props) =>{
+const Header = (props) => {
+  const [listName, setListName] = React.useState("");
+  const [show, setShow] = useState(false);
 
-    const [isValidInput,setIsValid] = React.useState('');
-    const [modalIsOpen,setIsOpen] = React.useState(false);
-    const [listName,setListName] = React.useState('');
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    function openModal() {
-        setIsOpen(true);
-    }
+  const addNewListFunction = () => {
+    props.addNewList(listName);
+    setShow(false);
+    setListName("");
+    props.showAlert('List Added');
+  };
+  const setValue = (event) => {
+    setListName(event.target.value);
+  };
 
-    function closeModal(){
-        setIsOpen(false);
-    }
-
-    const addNewListFunction = () =>{
-        if(listName === ''){
-            setIsValid("Please Specify ToDo List Name!");
-            return false;
-        }
-        props.addNewList(listName);
-        setIsOpen(false);
-        setListName('');
-        setIsValid('');
-    }
-    const setValue = event =>{
-        setIsValid('');
-        setListName(event.target.value);
-    }
-
-    return(
-        <div className="c-header">
+  return (
+    <div className="c-header">
+      <Container fluid>
+        <Row className="align-items-center">
+          <Col md={4} xs={12}>
             <h1 className="pageTitle">Header</h1>
-            <button className="c-btn" title="Add New ToDo List" data-toggle="tooltip" onClick={openModal}>Add New List</button>
-
-            <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            style={MODAL_STYLES}
-            contentLabel="Example Modal"
+          </Col>
+          <Col md={8} xs={12} className="t-right">
+            <Button
+              startIcon={<AddIcon />}
+              onClick={handleShow}
+              variant="contained"
+              color="primary"
+              size="small"
+              className="c-btn"
             >
-                <button onClick={closeModal}>close</button>
-                <div>
-                    <input type="text" name="listName" value={listName} onChange={(e) => setValue(e)} />
-                    <button className="cbtn" onClick={addNewListFunction}>Add List</button>
-                    { isValidInput && <p>{isValidInput}</p> }
-                </div>
-            </Modal>
-        </div>
-    );
-}
+              Create List
+            </Button>
+          </Col>
+        </Row>
+      </Container>
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    addNewList
-},dispatch);
+      <Modal show={show} onHide={handleClose} className="c-Modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Create List</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ValidatorForm
+            onSubmit={addNewListFunction}
+            onError={(errors) => console.log(errors)}
+          >
+            <div className="mb-20">
+              <TextValidator
+                label="List Name"
+                onChange={setValue}
+                variant="outlined"
+                name="listName"
+                className="w100"
+                value={listName}
+                validators={["required"]}
+                errorMessages={["Please enter list name"]}
+              />
+            </div>
+            <div className="t-center">
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className="c-btn"
+                type="submit"
+              >
+                Create
+              </Button>
+            </div>
+          </ValidatorForm>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
 
-export default compose(
-  connect(
-    null,
-    mapDispatchToProps
-  )
-)(Header);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addNewList,
+    },
+    dispatch
+  );
+
+export default compose(connect(null, mapDispatchToProps))(Header);

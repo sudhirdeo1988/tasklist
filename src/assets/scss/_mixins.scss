@@ -1,4 +1,18 @@
-@mixin rounded-corners ($property) {
+  /* ------- Utilitu Settings --------- */
+
+  .fontHeading{font-family: 'Roboto Condensed', sans-serif;}
+
+  .w100{width: 100%; box-sizing: border-box;}
+  .t-right{text-align: right;}.t-left{text-align: left;}
+  .t-center{text-align: center;}
+  .right{float: right;}.left{float: left;}
+
+  .mb-10{margin-bottom: 10px;}.mb-20{margin-bottom: 20px;}
+  
+
+  /* ------- Mixins --------- */
+
+  @mixin rounded-corners ($property) {
     -webkit-border-radius: $property;
     -moz-border-radius: $property;
     border-radius: $property;

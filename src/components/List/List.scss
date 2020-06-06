@@ -1,0 +1,23 @@
+@import '../../assets/scss/ThemeColors';
+@import '../../assets/scss/mixins';
+.c-list{
+    display: block;
+    border: 0;
+    padding: 10px;
+    background-color: $secondaryColor;
+    border-radius: 3px;
+    box-shadow: 0 0 3px #999;
+
+    .listHeader{
+        display: block;
+        padding: 0;
+        margin-bottom: 20px;
+        @extend .fontHeading;
+            .listTitle{
+                display: block;
+                color: $gray-555;
+                font-size: 14px;
+                font-weight: 600;
+            }
+    }
+}

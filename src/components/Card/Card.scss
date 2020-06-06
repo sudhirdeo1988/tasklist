@@ -1,0 +1,30 @@
+@import '../../assets/scss/ThemeColors';
+@import '../../assets/scss/mixins';
+
+.c-cardItem{
+    border: 0;
+    display: block;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color:$white;
+    box-shadow: 0 0 2px #999;
+    border-radius: 3px;
+
+    .cardHeader{
+        display: block;
+        padding: 0;
+            .cardTitle{
+                display: block;
+                color: $gray-555;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .btnRemove{
+                background-color: #dedede;
+                    .MuiSvgIcon-root{
+                        color: $white;
+                    }
+            }
+    }
+}
