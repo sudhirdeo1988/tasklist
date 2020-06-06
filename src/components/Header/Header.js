@@ -1,44 +1,31 @@
 import React from "react";
 import Modal from 'react-modal';
 import './Header.scss';
-import {setData} from '../../reducers/todoListAction';
+import {addNewList} from '../../actions/list.action';
+import {MODAL_STYLES} from '../../utilities/constants';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
-    }
-};
 
 const Header = (props) =>{
 
     const [isValidInput,setIsValid] = React.useState('');
     const [modalIsOpen,setIsOpen] = React.useState(false);
     const [listName,setListName] = React.useState('');
+
     function openModal() {
         setIsOpen(true);
-    }
-
-    function afterOpenModal() {
-      // references are now sync'd and can be accessed.
     }
 
     function closeModal(){
         setIsOpen(false);
     }
 
-    const addNewList = () =>{
+    const addNewListFunction = () =>{
         if(listName === ''){
             setIsValid("Please Specify ToDo List Name!");
             return false;
         }
-        props.setData(listName);
+        props.addNewList(listName);
         setIsOpen(false);
         setListName('');
         setIsValid('');
@@ -55,15 +42,14 @@ const Header = (props) =>{
 
             <Modal
             isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={MODAL_STYLES}
             contentLabel="Example Modal"
             >
                 <button onClick={closeModal}>close</button>
                 <div>
                     <input type="text" name="listName" value={listName} onChange={(e) => setValue(e)} />
-                    <button className="cbtn" onClick={addNewList}>Add List</button>
+                    <button className="cbtn" onClick={addNewListFunction}>Add List</button>
                     { isValidInput && <p>{isValidInput}</p> }
                 </div>
             </Modal>
@@ -72,7 +58,7 @@ const Header = (props) =>{
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  setData
+    addNewList
 },dispatch);
 
 export default compose(

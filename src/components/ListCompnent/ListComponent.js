@@ -1,21 +1,11 @@
 import React from "react";
 import CardItem from '../CardItem/CardItem';
 import Modal from 'react-modal';
+import {MODAL_STYLES} from '../../utilities/constants';
 import './ListCompnent.scss';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {addCard, removeList} from '../../reducers/todoListAction';
-
-const customStyles = {
-    content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
-    }
-  };
+import {addNewCard, removeList} from '../../actions/list.action';
 
 const ListComponent = (props) => {
     const listData = props.item;
@@ -23,7 +13,7 @@ const ListComponent = (props) => {
     const [isValidInput,setIsValid] = React.useState('');
     const [modalIsOpen,setIsOpen] = React.useState(false);
     const [cardName,setcardName] = React.useState('');
-    const [modalType,setModalType] = React.useState('addList');
+    const [modalType,setModalType] = React.useState('modalType_addlist');
 
     function openModal(modalActionType) {
         setModalType(modalActionType);
@@ -44,35 +34,36 @@ const ListComponent = (props) => {
              setIsValid("Please Specify ToDo Task Name!");
              return false;
         }
-        props.addCard(cardName,listData.listId);
+        props.addNewCard(cardName,listData.listId);
         setIsOpen(false);
         setcardName(''); 
         setIsValid('');
     }
 
-    const removeList = listId =>{
-        openModal('removeList');
+    const removeListFromTodo = listId =>{
+        openModal('modalType_removelist');
         props.removeList(listId);
+        closeModal();
     }
 
     return (
     <div className="c-list">
         <span>{listData.listTitle}</span>
-        <button className="c-btn" type="button" onClick={()=>openModal('removeList')}>Remove</button>
+        <button className="c-btn" type="button" onClick={()=>openModal('modalType_removelist')}>Remove</button>
         {
             listData.listCards.map((item,index) => {
                 return <CardItem listData={listData} cardData={item} key={index} />
             })
         }
-        <button type="button" title="Add New ToDo Card" data-toggle="tooltip" onClick={()=>openModal('addList')}>Add New Card</button>
+        <button type="button" title="Add New ToDo Card" data-toggle="tooltip" onClick={()=>openModal('modalType_addlist')}>Add New Card</button>
 
         <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={MODAL_STYLES}
             contentLabel="New List"
             >
-                {modalType === 'addList' ? (
+                {modalType === 'modalType_addlist' ? (
                 <div>
                     <button onClick={closeModal}>close</button>
                     <div>
@@ -83,7 +74,7 @@ const ListComponent = (props) => {
                 </div>
                 ) : (
                     <div>
-                        <button className="cbtn" onClick={() => removeList(listData.listId)}>Yes</button>
+                        <button className="cbtn" onClick={() => removeListFromTodo(listData.listId)}>Yes</button>
                         <button className="cbtn" onClick={closeModal}>No</button>
                     </div>
                     ) } 
@@ -98,7 +89,7 @@ const mapStateToProps = (state) => {
     };
   };
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  addCard,
+  addNewCard,
   removeList
 },dispatch);
 

@@ -1,26 +1,18 @@
 import React from "react";
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import './CardItem.scss';
-import { removeCardFromList} from '../../reducers/todoListAction';
-
 import Modal from 'react-modal';
+import {MODAL_STYLES} from '../../utilities/constants';
+import { removeCardFromList} from '../../actions/list.action';
+import './CardItem.scss';
+
 Modal.setAppElement('*');
-const customStyles = {
-  content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
-  }
-};
 
 const CardItem = (props) => {
 
     const {listData, cardData} = props;
     const [modalIsOpen,setIsOpen] = React.useState(false);
+    
     function openModal() {
         setIsOpen(true);
     }
@@ -40,7 +32,7 @@ const CardItem = (props) => {
         <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={customStyles}
+            style={MODAL_STYLES}
             contentLabel="New List"
             >
               <div>

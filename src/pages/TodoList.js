@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ListComponent from '../components/ListCompnent/ListComponent';
 
 const TodoList = (props) =>{
-
+ 
     
     return(
         <div className="c-pageWrapper">
@@ -21,6 +21,7 @@ const TodoList = (props) =>{
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.todoList);
   return state;
 };
 

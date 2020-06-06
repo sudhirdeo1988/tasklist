@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose  } from "redux";
 import thunk from 'redux-thunk';
-import { todoListReducer } from "../reducers/todoListReducer";
+import { todoListReducer } from "../reducers/list.reducer";
+// import { todoListReducer } from "../reducers/list.reducer";
 
 const rootReducer = combineReducers({
   todoList: todoListReducer
