@@ -50,14 +50,20 @@ export const todoListReducer = (state = [], action) => {
 
     
     // --- for remove Card
-    case DRAG_CONSTANTS.REMOVE: {
+    case DRAG_CONSTANTS.ADD: {
       const backup = [...state];
-      const updatedListForCards = backup.find(
-        (listItem) => listItem.id === action.payload.listId
+      const sourseListData = backup.find(
+        (listItem) => listItem.id === action.payload.sourseListId
       );
-      updatedListForCards.cards = updatedListForCards.cards.filter(
-        (cardItem) => cardItem.id !== action.payload.cardId
+      const targetListData = backup.find(
+        (listItem) => listItem.id === action.payload.targetListId
       );
+      const cardDtls = sourseListData.cards.find(item => item.id === action.payload.cardId);
+      if(action.payload.targetListId !== action.payload.sourseListId){
+        sourseListData.cards = sourseListData.cards.filter(item => item.id !== action.payload.cardId);
+        targetListData.cards.push(cardDtls);
+      }
+      console.log(backup);
       return backup;
     }
 

@@ -44,6 +44,9 @@ const Card = (props) => {
           <Modal.Title>Remove Card</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div className="c-modalMessage">
+            Are you sure you want to remove Card from the list.?
+          </div>
           <div className="t-center">
             <Button
               variant="contained"

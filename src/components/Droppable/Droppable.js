@@ -12,7 +12,7 @@ const Droppable = (props) => {
     console.log("source list : " + sourceListId);
     console.log("source card : " + sourceCardId);
     console.log("target list : " + e.target.id);
-    props.dragDropCard(e.target.id, sourceListId, sourceCardId);
+    //props.dragDropCard(e.target.id, sourceListId, sourceCardId);
     e.target.appendChild(document.getElementById(sourceCardId));
   };
   const allowDrop = (e) => {

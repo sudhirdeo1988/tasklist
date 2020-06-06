@@ -337,6 +337,7 @@ font-family: 'Great Vibes', cursive;
         padding: 10px;
         grid-gap: 20px;
         overflow-x: auto;
+        height: 100%;
       }
   }
 
@@ -400,5 +401,13 @@ font-family: 'Great Vibes', cursive;
   width: 400px;
   margin-left: -200px;
   z-index: 10;
+}
+.c-modalMessage{
+  color: $gray-555;
+  display: block;
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 

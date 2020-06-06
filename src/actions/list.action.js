@@ -1,4 +1,4 @@
-import { LIST_CONSTANTS, CARD_CONSTANTS } from "../utilities/constants";
+import { LIST_CONSTANTS, CARD_CONSTANTS, DRAG_CONSTANTS } from "../utilities/constants";
 
 // ------------ Add List ---------------
 export function addNewList(listName) {
@@ -22,6 +22,6 @@ export function removeCard(listId, cardId) {
 
 // ------------ Drag Drop Card ---------------
 export function dragDropCard(targetListId, sourseListId, cardId) {
-  return { type: CARD_CONSTANTS.REMOVE, payload: { targetListId, sourseListId, cardId } };
+  return { type: DRAG_CONSTANTS.ADD, payload: { targetListId, sourseListId, cardId } };
 }
 

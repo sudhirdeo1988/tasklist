@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, useState } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Row, Col, Modal } from "react-bootstrap";
@@ -7,15 +7,17 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { addNewCard, removeList } from "../../actions/list.action";
-import Card from "../Card/Card";
-import Draggable from "../Draggable/Draggable";
+import Spinner from "../Spinner/Spinner";
 import "./List.scss";
+
+const Card = React.lazy(() => import("../Card/Card"));
+const Draggable = React.lazy(() => import("../Draggable/Draggable"));
 
 const List = (props) => {
   const listData = props.item;
-  const [cardName, setcardName] = React.useState("");
-  const [modalType, setModalType] = React.useState("modalType_addlist");
-  const [show, setShow] = React.useState(false);
+  const [cardName, setcardName] = useState("");
+  const [modalType, setModalType] = useState("modalType_addlist");
+  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -64,14 +66,17 @@ const List = (props) => {
 
       {listData.cards.map((cardItem, index) => {
         return (
-          <Draggable id={cardItem.id} key={index} listid={props.id}>
-            <Card
-              showAlert={props.showAlert}
-              listData={listData}
-              cardData={cardItem}
-              key={index}
-            />
-          </Draggable>
+          <Suspense fallback={<Spinner />} key={index}>
+            <Draggable id={cardItem.id} listid={props.id}>
+              <Suspense fallback={<Spinner />}>
+                <Card
+                  showAlert={props.showAlert}
+                  listData={listData}
+                  cardData={cardItem}
+                />
+              </Suspense>
+            </Draggable>
+          </Suspense>
         );
       })}
       <Button
@@ -122,6 +127,9 @@ const List = (props) => {
             </ValidatorForm>
           ) : (
             <div>
+              <div className="c-modalMessage">
+                Are you sure you want to remove list from dashboard.?
+              </div>
               <div className="t-center">
                 <Button
                   variant="contained"
