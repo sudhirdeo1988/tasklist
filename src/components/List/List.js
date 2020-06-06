@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { addNewCard, removeList } from "../../actions/list.action";
 import Card from "../Card/Card";
+import Draggable from "../Draggable/Draggable";
 import "./List.scss";
 
 const List = (props) => {
@@ -32,18 +33,18 @@ const List = (props) => {
     props.addNewCard(cardName, listData.id);
     handleClose();
     setcardName("");
-    props.showAlert('Card Added');
+    props.showAlert("Card Added");
   };
 
   const removeListFromTodo = (listId) => {
     openModal("modalType_removelist");
     props.removeList(listId);
     handleClose();
-    props.showAlert('List Removed');
+    props.showAlert("List Removed");
   };
 
   return (
-    <div className="c-list">
+    <div className="c-list" id={props.id}>
       <div className="listHeader">
         <Row className="align-items-center">
           <Col xs={9}>
@@ -62,7 +63,16 @@ const List = (props) => {
       </div>
 
       {listData.cards.map((cardItem, index) => {
-        return <Card showAlert={props.showAlert} listData={listData} cardData={cardItem} key={index} />;
+        return (
+          <Draggable id={cardItem.id} key={index} listid={props.id}>
+            <Card
+              showAlert={props.showAlert}
+              listData={listData}
+              cardData={cardItem}
+              key={index}
+            />
+          </Draggable>
+        );
       })}
       <Button
         startIcon={<AddIcon />}
@@ -77,9 +87,7 @@ const List = (props) => {
       <Modal show={show} onHide={handleClose} className="c-Modal">
         <Modal.Header closeButton>
           <Modal.Title>
-            {modalType === "modalType_addlist"
-              ? "Add New Card"
-              : "Remove List"}
+            {modalType === "modalType_addlist" ? "Add New Card" : "Remove List"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

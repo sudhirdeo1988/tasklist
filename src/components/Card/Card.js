@@ -7,7 +7,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import { removeCard } from "../../actions/list.action";
 import "./Card.scss";
 
-
 const Card = (props) => {
   const { listData, cardData } = props;
 
@@ -19,10 +18,10 @@ const Card = (props) => {
   const removeCard = (listId, cardId) => {
     props.removeCard(listId, cardId);
     handleClose();
-    props.showAlert('Card removed');
+    props.showAlert("Card removed");
   };
   return (
-    <div className="c-cardItem">
+    <div className="c-cardItem" id={props.id} listid={props.listId}>
       <div className="cardHeader">
         <Row className="align-items-center">
           <Col xs={9}>
