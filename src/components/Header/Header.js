@@ -30,7 +30,7 @@ const Header = (props) => {
       <Container fluid>
         <Row className="align-items-center">
           <Col md={4} xs={12}>
-            <h1 className="pageTitle">Header</h1>
+            <h1 className="pageTitle">Tasklist Dashboard</h1>
           </Col>
           <Col md={8} xs={12} className="t-right">
             <Button

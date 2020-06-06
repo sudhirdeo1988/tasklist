@@ -13,9 +13,9 @@
 
         .pageTitle{
             color: $primaryColor;
-            display: inline-block;
-            float: left;
+            display: block;
             font-size: 16px;
             font-weight: 600;
+            margin: 0;
         }
 }

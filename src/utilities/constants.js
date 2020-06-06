@@ -10,6 +10,10 @@ export const LIST_CONSTANTS = {
   EDIT: "edit_list",
 };
 
+export const DRAG_CONSTANTS = {
+  ADD: "drop_to_list"
+};
+
 export const MODAL_STYLES = {
   content: {
     minHeight: "200px",

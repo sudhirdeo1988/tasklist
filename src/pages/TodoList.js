@@ -22,7 +22,11 @@ const TodoList = (props) => {
 
   return (
     <div className="c-pageWrapper">
-      {alertMessage && <Alert variant="success">{message}</Alert>}
+      {alertMessage && (
+        <Alert className="c-alert" variant="success">
+          {message}
+        </Alert>
+      )}
       <Header showAlert={showAlert} />
       <div className="c-listBody">
         <div className="listGrid">
@@ -30,7 +34,12 @@ const TodoList = (props) => {
             props.todoList.map((item, index) => {
               return (
                 <Droppable id={item.id} key={index}>
-                  <List showAlert={showAlert} key={index} item={item} id={item.id} />
+                  <List
+                    showAlert={showAlert}
+                    key={index}
+                    item={item}
+                    id={item.id}
+                  />
                 </Droppable>
               );
             })}

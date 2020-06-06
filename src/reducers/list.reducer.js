@@ -1,4 +1,4 @@
-import { LIST_CONSTANTS, CARD_CONSTANTS } from "../utilities/constants";
+import { LIST_CONSTANTS, CARD_CONSTANTS, DRAG_CONSTANTS } from "../utilities/constants";
 import uuid from "react-uuid";
 
 export const todoListReducer = (state = [], action) => {
@@ -38,6 +38,19 @@ export const todoListReducer = (state = [], action) => {
 
     // --- for remove Card
     case CARD_CONSTANTS.REMOVE: {
+      const backup = [...state];
+      const updatedListForCards = backup.find(
+        (listItem) => listItem.id === action.payload.listId
+      );
+      updatedListForCards.cards = updatedListForCards.cards.filter(
+        (cardItem) => cardItem.id !== action.payload.cardId
+      );
+      return backup;
+    }
+
+    
+    // --- for remove Card
+    case DRAG_CONSTANTS.REMOVE: {
       const backup = [...state];
       const updatedListForCards = backup.find(
         (listItem) => listItem.id === action.payload.listId

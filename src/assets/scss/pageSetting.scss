@@ -393,3 +393,12 @@ font-family: 'Great Vibes', cursive;
   }
 }
 
+.c-alert{
+  position: fixed !important;
+  top: 30px;
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+  z-index: 10;
+}
+

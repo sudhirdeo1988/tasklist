@@ -19,3 +19,9 @@ export function addNewCard(cardName, listId) {
 export function removeCard(listId, cardId) {
   return { type: CARD_CONSTANTS.REMOVE, payload: { listId, cardId } };
 }
+
+// ------------ Drag Drop Card ---------------
+export function dragDropCard(targetListId, sourseListId, cardId) {
+  return { type: CARD_CONSTANTS.REMOVE, payload: { targetListId, sourseListId, cardId } };
+}
+
