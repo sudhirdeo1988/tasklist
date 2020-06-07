@@ -31,7 +31,8 @@ export const todoListReducer = (state = [], action) => {
       console.log(listData);
       listData.cards.push({
         id: uuid(),
-        name: action.payload.cardName,
+        name: action.payload.cardData.cardName,
+        description: action.payload.cardData.cardDescription,
       });
       return backup;
     }

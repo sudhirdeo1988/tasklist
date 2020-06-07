@@ -10,23 +10,32 @@ const List = React.lazy(() => import("../components/List/List"));
 const Droppable = React.lazy(() => import("../components/Droppable/Droppable"));
 
 const TodoList = (props) => {
-  const [alertMessage, setAlertMessage] = useState(false);
-  const [message, setMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState({
+    status: false,
+    message: "",
+    type: "success",
+  });
 
-  const showAlert = (msg) => {
-    setMessage(msg);
-    setAlertMessage(true);
+  const showAlert = (status, msg, type) => {
+    setAlertMessage({
+      status: status,
+      message: msg,
+      type: type,
+    });
     setTimeout(() => {
-      setAlertMessage(false);
-      setMessage("");
-    }, 3000);
+      setAlertMessage({
+        status: false,
+        message: "",
+        type: "success",
+      });
+    }, 2000);
   };
 
   return (
     <div className="c-pageWrapper">
-      {alertMessage && (
-        <Alert className="c-alert" variant="success">
-          {message}
+      {alertMessage.status && (
+        <Alert className="c-alert" variant={alertMessage.type}>
+          {alertMessage.message}
         </Alert>
       )}
       <Suspense fallback={<Spinner />}>
@@ -38,13 +47,9 @@ const TodoList = (props) => {
             props.todoList.map((item, index) => {
               return (
                 <Suspense fallback={<Spinner />} key={index}>
-                  <Droppable id={item.id} >
+                  <Droppable id={item.id}>
                     <Suspense fallback={<Spinner />}>
-                      <List
-                        showAlert={showAlert}
-                        item={item}
-                        id={item.id}
-                      />
+                      <List showAlert={showAlert} item={item} id={item.id} />
                     </Suspense>
                   </Droppable>
                 </Suspense>

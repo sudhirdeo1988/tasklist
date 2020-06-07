@@ -11,8 +11,8 @@ export function removeList(listId) {
 }
 
 // ------------ Add Card ---------------
-export function addNewCard(cardName, listId) {
-  return { type: CARD_CONSTANTS.ADD, payload: { cardName, listId } };
+export function addNewCard(cardData, listId) {
+  return { type: CARD_CONSTANTS.ADD, payload: { cardData, listId } };
 }
 
 // ------------ Remove Card ---------------

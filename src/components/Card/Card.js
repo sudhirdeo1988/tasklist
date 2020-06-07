@@ -18,7 +18,7 @@ const Card = (props) => {
   const removeCard = (listId, cardId) => {
     props.removeCard(listId, cardId);
     handleClose();
-    props.showAlert("Card removed");
+    props.showAlert(true, "Card removed successfully", "success");
   };
   return (
     <div className="c-cardItem" id={props.id} listid={props.listId}>
@@ -37,6 +37,14 @@ const Card = (props) => {
             </button>
           </Col>
         </Row>
+
+      </div>
+      <div className="cardBody">
+        <Row className="align-items-center">
+            <Col xs={12}>
+              <span className="cardDesc">{cardData.description}</span>
+            </Col>
+          </Row>
       </div>
 
       <Modal show={show} onHide={handleClose} className="c-Modal">

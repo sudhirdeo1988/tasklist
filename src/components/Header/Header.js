@@ -16,10 +16,18 @@ const Header = (props) => {
   const handleShow = () => setShow(true);
 
   const addNewListFunction = () => {
-    props.addNewList(listName);
-    setShow(false);
-    setListName("");
-    props.showAlert('List Added');
+    const isListExist = props.todoList.some((el) => el.name === listName);
+    console.log(props.todoList);
+    if (!isListExist) {
+      props.addNewList(listName);
+      setShow(false);
+      setListName("");
+      props.showAlert(true, 'List Added Successfuly', 'success');
+    } else {
+      setShow(false);
+      props.showAlert(true, 'List Already Exist', 'danger');
+      setListName("");
+    }
   };
   const setValue = (event) => {
     setListName(event.target.value);
@@ -85,7 +93,10 @@ const Header = (props) => {
     </div>
   );
 };
-
+const mapStateToProps = (state) => {
+  console.log(`state`, state);
+  return state;
+};
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
@@ -94,4 +105,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default compose(connect(null, mapDispatchToProps))(Header);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Header);
