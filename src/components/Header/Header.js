@@ -17,15 +17,18 @@ const Header = (props) => {
 
   const addNewListFunction = () => {
     const isListExist = props.todoList.some((el) => el.name === listName);
-    console.log(props.todoList);
     if (!isListExist) {
       props.addNewList(listName);
       setShow(false);
       setListName("");
-      props.showAlert(true, 'List Added Successfuly', 'success');
+      props.showAlert(true, `List: ${listName} Added Successfuly!`, "success");
     } else {
-      setShow(false);
-      props.showAlert(true, 'List Already Exist', 'danger');
+      setShow(true);
+      props.showAlert(
+        true,
+        `${listName} List Already Exist on Dashboard!`,
+        "danger"
+      );
       setListName("");
     }
   };
@@ -48,6 +51,8 @@ const Header = (props) => {
               color="primary"
               size="small"
               className="c-btn"
+              title="Create New Task List"
+              autoComplete="off"
             >
               Create List
             </Button>
@@ -73,7 +78,7 @@ const Header = (props) => {
                 className="w100"
                 value={listName}
                 validators={["required"]}
-                errorMessages={["Please enter list name"]}
+                errorMessages={["Please specify List name!"]}
               />
             </div>
             <div className="t-center">
@@ -83,6 +88,8 @@ const Header = (props) => {
                 size="small"
                 className="c-btn"
                 type="submit"
+                title="Create List"
+                autoComplete="off"
               >
                 Create
               </Button>

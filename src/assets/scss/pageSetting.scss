@@ -370,12 +370,11 @@ font-family: 'Great Vibes', cursive;
 
       .MuiSvgIcon-root{
           color: $white;
-          height: 13px;
-          width: 13px;
-          font-size: 18px;
+          height: 12px;
+          width: 12px;
+          vertical-align: baseline;
           position: relative;
-          top: -3px;
-          border-radius: 50px;
+          display: inline-block;
       }
 }
 
@@ -401,7 +400,7 @@ font-family: 'Great Vibes', cursive;
   left: 50%;
   width: 400px;
   margin-left: -200px;
-  z-index: 10;
+  z-index: 1060;
 }
 .c-modalMessage{
   color: $gray-555;
@@ -411,4 +410,3 @@ font-family: 'Great Vibes', cursive;
   text-align: center;
   margin-bottom: 20px;
 }
-

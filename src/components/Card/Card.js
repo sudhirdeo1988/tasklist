@@ -18,7 +18,7 @@ const Card = (props) => {
   const removeCard = (listId, cardId) => {
     props.removeCard(listId, cardId);
     handleClose();
-    props.showAlert(true, "Card removed successfully", "success");
+    props.showAlert(true, `Card removed successfully`, "success");
   };
   return (
     <div className="c-cardItem" id={props.id} listid={props.listId}>
@@ -31,6 +31,7 @@ const Card = (props) => {
             <button
               className="btnRemove"
               type="button"
+              title="Remove Card"
               onClick={() => handleShow()}
             >
               <CloseIcon />
@@ -53,7 +54,7 @@ const Card = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div className="c-modalMessage">
-            Are you sure you want to remove Card from the list.?
+            Are you sure want to remove {cardData.name} Card from the list?
           </div>
           <div className="t-center">
             <Button

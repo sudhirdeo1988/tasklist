@@ -2,13 +2,14 @@
 @import '../../assets/scss/mixins';
 
 .c-cardItem{
+    box-sizing: border-box;
     border: 0;
     display: block;
     padding: 5px;
     margin-bottom: 10px;
     background-color:$white;
-    box-shadow: 0 0 2px #999;
-    border-radius: 3px;
+    @include rounded-corners(3px);
+    @include box-shadow(0 0 2px #999);
 
     .cardHeader{
         display: block;
@@ -25,7 +26,7 @@
             .btnRemove{
                 background-color: #dedede;
                     .MuiSvgIcon-root{
-                        color: $white;
+                        color: #a7a7a7;
                     }
             }
     }
