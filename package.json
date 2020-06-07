@@ -28,8 +28,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "code": "react-scripts test --env=jsdom --coverage",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,5 +46,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0"
   }
 }

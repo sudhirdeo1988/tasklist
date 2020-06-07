@@ -14,19 +14,6 @@ export const DRAG_CONSTANTS = {
   ADD: "drop_to_list"
 };
 
-export const MODAL_STYLES = {
-  content: {
-    minHeight: "200px",
-    width: "300px",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
 export const THEME = {
   primaryColor: "#1075C0"
 }
