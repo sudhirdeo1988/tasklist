@@ -28,7 +28,6 @@ export const todoListReducer = (state = [], action) => {
     case CARD_CONSTANTS.ADD: {
       const backup = [...state];
       const listData = backup.find((list) => action.payload.listId === list.id);
-      console.log(listData);
       listData.cards.push({
         id: uuid(),
         name: action.payload.cardData.cardName,

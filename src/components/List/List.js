@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Row, Col, Modal } from "react-bootstrap";
@@ -7,12 +7,10 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { addNewCard, removeList } from "../../actions/list.action";
-import Spinner from "../Spinner/Spinner";
 import "./List.scss";
 import { Scrollbars } from "react-custom-scrollbars";
-
-const Card = React.lazy(() => import("../Card/Card"));
-const Draggable = React.lazy(() => import("../Draggable/Draggable"));
+import  Card from "../Card/Card";
+import Draggable from "../Draggable/Draggable";
 
 const List = (props) => {
   const listData = props.item;
@@ -32,9 +30,7 @@ const List = (props) => {
   }
 
   const setValue = (event) => {
-    console.log(event.target.value);
     cardData[event.target.name] = event.target.value;
-    console.log(cardData);
     setcardData({ ...cardData });
   };
 
@@ -72,7 +68,11 @@ const List = (props) => {
     openModal("modalType_removelist");
     props.removeList(listId);
     handleClose();
-    props.showAlert(true, `${listData.name} List removed successfully!`, "success");
+    props.showAlert(
+      true,
+      `${listData.name} List removed successfully!`,
+      "success"
+    );
   };
 
   return (
@@ -97,7 +97,7 @@ const List = (props) => {
 
       <div className="listBody">
         <Scrollbars
-          autoHeightMax={400}
+          autoHeightMax={350}
           autoHide
           autoHideTimeout={1000}
           autoHideDuration={200}
@@ -113,17 +113,13 @@ const List = (props) => {
         >
           {listData.cards.map((cardItem, index) => {
             return (
-              <Suspense fallback={<Spinner />} key={index}>
-                <Draggable id={cardItem.id} listid={props.id}>
-                  <Suspense fallback={<Spinner />}>
-                    <Card
-                      showAlert={props.showAlert}
-                      listData={listData}
-                      cardData={cardItem}
-                    />
-                  </Suspense>
-                </Draggable>
-              </Suspense>
+              <Draggable id={cardItem.id} listid={props.id} key={index}> 
+                <Card
+                  showAlert={props.showAlert}
+                  listData={listData}
+                  cardData={cardItem}
+                />
+              </Draggable>
             );
           })}
         </Scrollbars>
@@ -192,7 +188,7 @@ const List = (props) => {
           ) : (
             <div>
               <div className="c-modalMessage">
-              Are you sure want to remove {listData.name} list from dashboard?
+                Are you sure want to remove {listData.name} list from dashboard?
               </div>
               <div className="t-center">
                 <Button

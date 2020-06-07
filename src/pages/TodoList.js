@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { Alert } from "react-bootstrap";
-import Spinner from "../components/Spinner/Spinner";
-
-const Header = React.lazy(() => import("../components/Header/Header"));
-const List = React.lazy(() => import("../components/List/List"));
-const Droppable = React.lazy(() => import("../components/Droppable/Droppable"));
+import Header from "../components/Header/Header";
+import List from "../components/List/List";
+import Droppable from "../components/Droppable/Droppable";
 
 const TodoList = (props) => {
   const [alertMessage, setAlertMessage] = useState({
@@ -38,21 +36,15 @@ const TodoList = (props) => {
           {alertMessage.message}
         </Alert>
       )}
-      <Suspense fallback={<Spinner />}>
-        <Header showAlert={showAlert} />
-      </Suspense>
+      <Header showAlert={showAlert} />
       <div className="c-listBody">
         <div className="listGrid">
           {props.todoList &&
             props.todoList.map((item, index) => {
               return (
-                <Suspense fallback={<Spinner />} key={index}>
-                  <Droppable id={item.id}>
-                    <Suspense fallback={<Spinner />}>
-                      <List showAlert={showAlert} item={item} id={item.id} />
-                    </Suspense>
-                  </Droppable>
-                </Suspense>
+                <Droppable id={item.id} key={index}>
+                  <List showAlert={showAlert} item={item} id={item.id} />
+                </Droppable>
               );
             })}
         </div>

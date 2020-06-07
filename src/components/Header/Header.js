@@ -52,7 +52,6 @@ const Header = (props) => {
               size="small"
               className="c-btn"
               title="Create New Task List"
-              autoComplete="off"
             >
               Create List
             </Button>
@@ -78,6 +77,7 @@ const Header = (props) => {
                 className="w100"
                 value={listName}
                 validators={["required"]}
+                autoComplete="off"
                 errorMessages={["Please specify List name!"]}
               />
             </div>
@@ -89,7 +89,6 @@ const Header = (props) => {
                 className="c-btn"
                 type="submit"
                 title="Create List"
-                autoComplete="off"
               >
                 Create
               </Button>
@@ -101,7 +100,6 @@ const Header = (props) => {
   );
 };
 const mapStateToProps = (state) => {
-  console.log(`state`, state);
   return state;
 };
 const mapDispatchToProps = (dispatch) =>
