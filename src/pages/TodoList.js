@@ -33,7 +33,6 @@ const TodoList = (props) => {
   };
 
   const onDragEnd = (result) => {
-    console.log("dragEnd", result);
     if (
       result.source &&
       result.destination &&
