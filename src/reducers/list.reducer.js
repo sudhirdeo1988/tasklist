@@ -55,34 +55,20 @@ export const todoListReducer = (state = [], action) => {
     // --- for remove Card
     case DRAG_CONSTANTS.ADD: {
       const backup = [...state];
+      const targetListData = backup.find(
+        (targetListItem) => targetListItem.id === action.payload.targetId
+      );
       const sourseListData = backup.find(
-        (listItem) => listItem.id === action.payload.sourseListId
+        (sourseListItem) => sourseListItem.id === action.payload.sourseId
+      );
+      const cardDtls = sourseListData.cards.find(
+        (cardItem) => cardItem.id === action.payload.dragCardId
+      );
+      sourseListData.cards = sourseListData.cards.filter(
+        (item) => item.id !== action.payload.dragCardId
       );
 
-      if (action.payload.sourseListId !== action.payload.targetListId) {
-        const targetListData = backup.find(
-          (listItem) => listItem.id === action.payload.targetListId
-        );
-        const cardDtls = sourseListData.cards.find(
-          (item) => item.id === action.payload.cardId
-        );
-        if (action.payload.targetListId !== action.payload.sourseListId) {
-          sourseListData.cards = sourseListData.cards.filter(
-            (item) => item.id !== action.payload.cardId
-          );
-          targetListData.cards.push(cardDtls);
-        }
-      } else {
-        const cardDtls = sourseListData.cards.find(
-          (item) => item.id === action.payload.cardId
-        );
-        sourseListData.cards = sourseListData.cards.filter(
-          (item) => item.id !== action.payload.cardId
-        );
-        sourseListData.cards.push(cardDtls);
-      }
-
-      console.table(backup);
+      targetListData.cards.splice(action.payload.destinationIndex, 0, cardDtls);
       return backup;
     }
 
