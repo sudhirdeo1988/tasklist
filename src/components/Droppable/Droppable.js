@@ -23,7 +23,12 @@ const Droppable = (props) => {
     e.preventDefault();
   };
   return (
-    <div id={props.id} onDrop={drop} onDragOver={allowDrop}>
+    <div
+      id={props.id}
+      onDrop={drop}
+      onDragOver={allowDrop}
+      className="dropableArea"
+    >
       {props.children}
     </div>
   );

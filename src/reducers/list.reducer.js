@@ -1,4 +1,8 @@
-import { LIST_CONSTANTS, CARD_CONSTANTS, DRAG_CONSTANTS } from "../utilities/constants";
+import {
+  LIST_CONSTANTS,
+  CARD_CONSTANTS,
+  DRAG_CONSTANTS,
+} from "../utilities/constants";
 import uuid from "react-uuid";
 
 export const todoListReducer = (state = [], action) => {
@@ -48,22 +52,37 @@ export const todoListReducer = (state = [], action) => {
       return backup;
     }
 
-    
     // --- for remove Card
     case DRAG_CONSTANTS.ADD: {
       const backup = [...state];
       const sourseListData = backup.find(
         (listItem) => listItem.id === action.payload.sourseListId
       );
-      const targetListData = backup.find(
-        (listItem) => listItem.id === action.payload.targetListId
-      );
-      const cardDtls = sourseListData.cards.find(item => item.id === action.payload.cardId);
-      if(action.payload.targetListId !== action.payload.sourseListId){
-        sourseListData.cards = sourseListData.cards.filter(item => item.id !== action.payload.cardId);
-        targetListData.cards.push(cardDtls);
+
+      if (action.payload.sourseListId !== action.payload.targetListId) {
+        const targetListData = backup.find(
+          (listItem) => listItem.id === action.payload.targetListId
+        );
+        const cardDtls = sourseListData.cards.find(
+          (item) => item.id === action.payload.cardId
+        );
+        if (action.payload.targetListId !== action.payload.sourseListId) {
+          sourseListData.cards = sourseListData.cards.filter(
+            (item) => item.id !== action.payload.cardId
+          );
+          targetListData.cards.push(cardDtls);
+        }
+      } else {
+        const cardDtls = sourseListData.cards.find(
+          (item) => item.id === action.payload.cardId
+        );
+        sourseListData.cards = sourseListData.cards.filter(
+          (item) => item.id !== action.payload.cardId
+        );
+        sourseListData.cards.push(cardDtls);
       }
-      console.log(backup);
+
+      console.table(backup);
       return backup;
     }
 
