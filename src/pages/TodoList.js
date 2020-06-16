@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import { compose } from "redux";
+import { compose, bindActionCreators } from "redux";
 import { connect } from "react-redux";
+
 import { Alert } from "react-bootstrap";
 import Header from "../components/Header/Header";
 import List from "../components/List/List";
-import Droppable from "../components/Droppable/Droppable";
+// import Droppable from "../components/Droppable/Droppable";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { dragDropCard } from "../actions/list.action";
 
 const TodoList = (props) => {
   const [alertMessage, setAlertMessage] = useState({
@@ -29,6 +32,24 @@ const TodoList = (props) => {
     }, 2000);
   };
 
+  const onDragEnd = (result) => {
+    console.log("dragEnd", result);
+    if (
+      result.source &&
+      result.destination &&
+      result.source.droppableId &&
+      result.destination.droppableId
+    ) {
+      const newObj = {
+        sourseId: result.source.droppableId,
+        targetId: result.destination.droppableId,
+        dragCardId: result.draggableId,
+        destinationIndex: result.destination.index,
+      };
+      props.dragDropCard(newObj);
+    }
+  };
+
   return (
     <div className="c-pageWrapper">
       {alertMessage.status && (
@@ -38,16 +59,23 @@ const TodoList = (props) => {
       )}
       <Header showAlert={showAlert} />
       <div className="c-listBody">
-        <div className="listGrid">
-          {props.todoList &&
-            props.todoList.map((item, index) => {
-              return (
-                <Droppable id={item.id} key={index}>
-                  <List showAlert={showAlert} item={item} id={item.id} />
-                </Droppable>
-              );
-            })}
-        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="listGrid">
+            {props.todoList &&
+              props.todoList.map((item, index) => {
+                return (
+                  <Droppable droppableId={item.id} key={index}>
+                    {(provided) => (
+                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                        <List showAlert={showAlert} item={item} id={item.id} />
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                );
+              })}
+          </div>
+        </DragDropContext>
       </div>
     </div>
   );
@@ -57,4 +85,12 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default compose(connect(mapStateToProps))(TodoList);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      dragDropCard,
+    },
+    dispatch
+  );
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(TodoList);

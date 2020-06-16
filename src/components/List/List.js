@@ -9,8 +9,8 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { addNewCard, removeList } from "../../actions/list.action";
 import "./List.scss";
 import { Scrollbars } from "react-custom-scrollbars";
-import  Card from "../Card/Card";
-import Draggable from "../Draggable/Draggable";
+import Card from "../Card/Card";
+import { Draggable } from "react-beautiful-dnd";
 
 const List = (props) => {
   const listData = props.item;
@@ -97,7 +97,8 @@ const List = (props) => {
 
       <div className="listBody">
         <Scrollbars
-          autoHeightMax={350}
+          autoHeightMax={430}
+          autoHeightMin={100}
           autoHide
           autoHideTimeout={1000}
           autoHideDuration={200}
@@ -113,17 +114,31 @@ const List = (props) => {
         >
           {listData.cards.map((cardItem, index) => {
             return (
-              <Draggable id={cardItem.id} listid={props.id} key={index}> 
-                <Card
-                  showAlert={props.showAlert}
-                  listData={listData}
-                  cardData={cardItem}
-                />
+              <Draggable
+                draggableId={cardItem.id}
+                index={index}
+                key={cardItem.id}
+              >
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="dragHandller"
+                  >
+                    <Card
+                      showAlert={props.showAlert}
+                      listData={listData}
+                      cardData={cardItem}
+                    />
+                  </div>
+                )}
               </Draggable>
             );
           })}
         </Scrollbars>
       </div>
+
       <Button
         startIcon={<AddIcon />}
         onClick={() => openModal("modalType_addlist")}

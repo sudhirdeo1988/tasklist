@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { removeCard } from "../../actions/list.action";
 import "./Card.scss";
+// import { Draggable } from "react-beautiful-dnd";
 
 const Card = (props) => {
   const { listData, cardData } = props;
@@ -38,14 +39,13 @@ const Card = (props) => {
             </button>
           </Col>
         </Row>
-
       </div>
       <div className="cardBody">
         <Row className="align-items-center">
-            <Col xs={12}>
-              <span className="cardDesc">{cardData.description}</span>
-            </Col>
-          </Row>
+          <Col xs={12}>
+            <span className="cardDesc">{cardData.description}</span>
+          </Col>
+        </Row>
       </div>
 
       <Modal show={show} onHide={handleClose} className="c-Modal">
